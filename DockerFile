@@ -1,0 +1,6 @@
+FROM mcr.microsoft.com/powershell:latest
+
+RUN apt-get update && apt-get -y install git 
+
+SHELL ["pwsh", "-command"]
+RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted && Install-Module -Name Pester, PlatyPS, PSScriptAnalyzer -AllowClobber -Force

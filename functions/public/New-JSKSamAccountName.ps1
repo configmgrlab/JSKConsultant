@@ -36,9 +36,9 @@ function New-JSKSamAccountName {
         $First = ConvertTo-JSKCyrillicName -Name $FirstName
         $Last = ConvertTo-JSKCyrillicName -Name $LastName
 
-        # Get first 3 letters of the first and last name.
-        $First = if ($First.Length -gt 2) { $First.Substring(0, 3) } else { $First }
-        $Last = if ($Last.Length -gt 2) { $Last.Substring(0, 3) } else { $Last }
+        # Get the first 3 letters of firstname and lastname, if one of the names is short then take an extra letter from the other name.
+        $First = $First.Substring(0, [math]::Min(3, $First.Length))
+        $Last = $Last.Substring(0, [math]::Min(3, $Last.Length))
 
         # Make as many combinations as possible
         $Combinations = for ($i = 0; $i -lt 3; $i++) {

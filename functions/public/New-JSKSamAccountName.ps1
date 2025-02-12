@@ -41,9 +41,13 @@ function New-JSKSamAccountName {
         $Last = $Last.Substring(0, [math]::Min(3, $Last.Length))
 
         # Make as many combinations as possible
-        $Combinations = for ($i = 0; $i -lt 3; $i++) {
-            for ($j = 0; $j -lt 3; $j++) {
-                $First.Substring(0, $i + 1) + $Last.Substring(0, $j + 1) | Where-Object { $_.Length -ge 3 -and $_.Length -le 5 }
+        $Combinations = [System.Collections.Generic.List[string]]::new()
+        for ($i = 0; $i -lt [math]::Min(3, $First.Length); $i++) {
+            for ($j = 0; $j -lt [math]::Min(3, $Last.Length); $j++) {
+                $combination = $First.Substring(0, [math]::Min($i + 1, $First.Length)) + $Last.Substring(0, [math]::Min($j + 1, $Last.Length))
+                if ($combination.Length -ge 3 -and $combination.Length -le 5) {
+                    $Combinations.Add($combination) | Out-Null
+                }
             }
         }
 
